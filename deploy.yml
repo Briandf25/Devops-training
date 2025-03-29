@@ -1,0 +1,23 @@
+name: Deploy a Google Cloud
+
+on: push  # Se ejecuta cuando se hace un push al repositorio
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Usa una máquina virtual con Ubuntu
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v4  # Descarga el código del repositorio
+
+      - name: Autenticarse en Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_KEY }}  # Usa la clave JSON guardada en GitHub
+
+      - name: Configurar gcloud CLI
+        run: |
+          gcloud auth list  # Muestra la cuenta autenticada
+          gcloud config set project devops-training-455220  # Configura el ID del proyecto en Google Cloud
+
+
